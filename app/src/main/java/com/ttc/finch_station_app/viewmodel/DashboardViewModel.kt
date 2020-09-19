@@ -25,7 +25,6 @@ class DashboardViewModel
                     loading.postValue(false)
                 }
                 .subscribe({
-                    Timber.e("stopList ${it.stops}")
                     stopList.postValue(it.stops.toMutableList())
                     stationName.postValue(it.name)
                     loading.postValue(false)

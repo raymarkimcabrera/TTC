@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#8e0000</color>
     <color name="colorAccent">#ffebee</color>
 
+    <!-- App Colors -->
+    <color name="colorPrimaryLight">#ff5f52</color>
 
     <color name="red_50">#FFEBEE</color>
     <color name="red_100">#FFCDD2</color>
