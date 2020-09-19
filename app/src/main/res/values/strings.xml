@@ -3,4 +3,5 @@
     <string name="dashboard_title">Finch Station Routes</string>
     <string name="no_route_available">No route available</string>
     <string name="see_all">See all</string>
+    <string name="routes">Route/s:</string>
 </resources>

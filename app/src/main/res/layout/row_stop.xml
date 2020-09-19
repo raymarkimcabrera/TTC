@@ -36,6 +36,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/spacing_large"
@@ -49,6 +50,11 @@
             android:orientation="vertical"
             android:visibility="visible">
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/routes"
+                android:layout_marginBottom="@dimen/spacing_xsmall"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_route_list"
                 android:layout_width="match_parent"

@@ -4,10 +4,13 @@ import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.support.DaggerAppCompatActivity
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 abstract class BaseActivity: DaggerAppCompatActivity() {
 
+
+    protected var subscriptionsWhileInMemory: CompositeDisposable = CompositeDisposable()
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -25,6 +28,10 @@ abstract class BaseActivity: DaggerAppCompatActivity() {
     }
 
 
+    override fun onDestroy() {
+        super.onDestroy()
+        subscriptionsWhileInMemory.clear()
+    }
 
 
 }

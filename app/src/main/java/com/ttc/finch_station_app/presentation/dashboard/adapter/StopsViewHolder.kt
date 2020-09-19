@@ -2,22 +2,48 @@ package com.ttc.finch_station_app.presentation.dashboard.adapter
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
+import com.jakewharton.rxbinding3.view.clicks
 import com.ttc.finch_station_app.R
 import com.ttc.finch_station_app.extensions.hide
 import com.ttc.finch_station_app.extensions.inflate
 import com.ttc.finch_station_app.extensions.show
 import com.ttc.finch_station_app.model.local.Stop
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.row_stop.view.*
 
-class StopsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+class StopsViewHolder(
+    compositeDisposable: CompositeDisposable,
+    itemView: View
+) : RecyclerView.ViewHolder(itemView) {
     companion object {
-        fun create(parent: ViewGroup): StopsViewHolder {
-            return StopsViewHolder(parent.inflate(R.layout.row_stop))
+        fun create(compositeDisposable: CompositeDisposable, parent: ViewGroup): StopsViewHolder {
+            return StopsViewHolder(compositeDisposable, parent.inflate(R.layout.row_stop))
         }
     }
 
     init {
+        with(itemView) {
+            compositeDisposable.addAll(
+                iv_stop_expand.clicks().subscribe {
+                    if (rl_content.isVisible) {
+
+                        TransitionManager.beginDelayedTransition(
+                            rl_content, AutoTransition())
+                        rl_content.hide()
+                        iv_stop_expand.setImageResource(R.drawable.ic_expand_more_black_18dp)
+                    } else {
+                        TransitionManager.beginDelayedTransition(
+                            rl_content, AutoTransition())
+                        rl_content.show()
+                        iv_stop_expand.setImageResource(R.drawable.ic_expand_less_black_18dp)
+                    }
+                })
+        }
 
     }
 

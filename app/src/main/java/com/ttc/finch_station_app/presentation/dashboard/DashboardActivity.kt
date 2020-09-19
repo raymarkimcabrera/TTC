@@ -23,7 +23,7 @@ fun MutableList<Stop>.sortByRouteList(): MutableList<Stop> {
 
 class DashboardActivity : BaseActivity() {
 
-    private val stopsAdapter = StopsAdapter(mutableListOf())
+    private val stopsAdapter = StopsAdapter(subscriptionsWhileInMemory, mutableListOf())
 
     private val dashboardViewModel: DashboardViewModel by viewModels { viewModelFactory }
     override fun getLayoutId(): Int = R.layout.activity_dashboard
@@ -48,7 +48,7 @@ class DashboardActivity : BaseActivity() {
         supportActionBar?.title = stationName
     }
 
-    private fun updateList(it: MutableList<Stop>){
+    private fun updateList(it: MutableList<Stop>) {
         stopsAdapter.updateItemList(it.sortByRouteList())
     }
 }
