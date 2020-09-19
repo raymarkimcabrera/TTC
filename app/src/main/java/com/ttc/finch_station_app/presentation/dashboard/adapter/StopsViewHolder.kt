@@ -31,7 +31,10 @@ class StopsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private fun displayRouteList(item: Stop) = with(itemView) {
         item.routes?.let {
-            val adapter = RouteAdapter(it)
+            val isSizeGreaterThanThree = it.size > 3
+            val temp = it.subList(0, if (isSizeGreaterThanThree) 3 else it.size)
+
+            val adapter = RouteAdapter(temp, isSizeGreaterThanThree)
             rv_route_list.adapter = adapter
         }
     }
@@ -46,7 +49,8 @@ class StopsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
     }
 
-    class RouteAdapter(private val items: List<Route>) :
+    class RouteAdapter(private val items: List<Route>,
+    private val isSizeGreaterThanThree: Boolean) :
         RecyclerView.Adapter<RouteAdapter.RouteViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
