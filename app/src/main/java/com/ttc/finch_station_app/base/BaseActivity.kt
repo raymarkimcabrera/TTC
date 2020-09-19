@@ -15,10 +15,16 @@ abstract class BaseActivity: DaggerAppCompatActivity() {
     abstract fun getLayoutId(): Int
 
     abstract fun initializeViews()
+    open fun initializeObservers() {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
+        initializeObservers()
         initializeViews()
     }
+
+
+
+
 }

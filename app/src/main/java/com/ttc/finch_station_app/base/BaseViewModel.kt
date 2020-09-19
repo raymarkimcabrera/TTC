@@ -1,5 +1,6 @@
 package com.ttc.finch_station_app.base
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ttc.finch_station_app.di.Schedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -10,6 +11,7 @@ abstract class BaseViewModel : ViewModel() {
     @Inject
     lateinit var schedulers: Schedulers
     var compositeDisposable: CompositeDisposable = CompositeDisposable()
+    var loading = MutableLiveData(false)
 
     override fun onCleared() {
         compositeDisposable.dispose()

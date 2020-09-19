@@ -8,14 +8,25 @@
     tools:context=".presentation.dashboard.DashboardActivity">
 
     <RelativeLayout
+        android:id="@+id/rl_loading_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:alpha="0.5"/>
+        android:visibility="gone">
+
+        <com.google.android.material.progressindicator.ProgressIndicator
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicatorType="circular"
+            android:layout_centerInParent="true"
+            android:indeterminate="true"/>
+
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/stopRecyclerView"
+        android:id="@+id/rv_stop_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:listitem="@layout/row_stop"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
