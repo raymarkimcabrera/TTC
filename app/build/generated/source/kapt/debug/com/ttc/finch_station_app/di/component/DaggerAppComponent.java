@@ -2,14 +2,14 @@ package com.ttc.finch_station_app.di.component;
 
 import androidx.lifecycle.ViewModel;
 import com.google.gson.Gson;
-import com.ttc.finch_station_app.MainActivity;
 import com.ttc.finch_station_app.base.BaseActivity_MembersInjector;
 import com.ttc.finch_station_app.base.BaseApplication;
 import com.ttc.finch_station_app.di.NetworkManager;
 import com.ttc.finch_station_app.di.NetworkManager_Factory;
 import com.ttc.finch_station_app.di.SchedulersImp;
 import com.ttc.finch_station_app.di.SchedulersImp_Factory;
-import com.ttc.finch_station_app.di.module.ActivityBuilderModule_MainActivity;
+import com.ttc.finch_station_app.di.module.ActivityBuilderModule_DashboardActivity;
+import com.ttc.finch_station_app.di.module.ActivityBuilderModule_SplashScreenActivity;
 import com.ttc.finch_station_app.di.module.NetworkModule;
 import com.ttc.finch_station_app.di.module.NetworkModule_ProvideApiInterface$app_debugFactory;
 import com.ttc.finch_station_app.di.module.NetworkModule_ProvideGson$app_debugFactory;
@@ -20,6 +20,8 @@ import com.ttc.finch_station_app.di.module.NetworkModule_ProvideRetrofitInterfac
 import com.ttc.finch_station_app.di.usecase.GetPostUseCase;
 import com.ttc.finch_station_app.di.usecase.GetPostUseCase_Factory;
 import com.ttc.finch_station_app.network.ApiInterface;
+import com.ttc.finch_station_app.presentation.dashboard.DashboardActivity;
+import com.ttc.finch_station_app.presentation.splash_screen.SplashScreenActivity;
 import com.ttc.finch_station_app.utils.ViewModelFactory;
 import com.ttc.finch_station_app.utils.ViewModelFactory_Factory;
 import com.ttc.finch_station_app.viewmodel.MainViewModel;
@@ -30,6 +32,7 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.DispatchingAndroidInjector_Factory;
 import dagger.android.support.DaggerAppCompatActivity_MembersInjector;
 import dagger.internal.DoubleCheck;
+import dagger.internal.MapBuilder;
 import dagger.internal.MapProviderFactory;
 import dagger.internal.Preconditions;
 import java.util.Collections;
@@ -50,7 +53,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
     "rawtypes"
 })
 public final class DaggerAppComponent implements AppComponent {
-  private Provider<ActivityBuilderModule_MainActivity.MainActivitySubcomponent.Factory> mainActivitySubcomponentFactoryProvider;
+  private Provider<ActivityBuilderModule_SplashScreenActivity.SplashScreenActivitySubcomponent.Factory> splashScreenActivitySubcomponentFactoryProvider;
+
+  private Provider<ActivityBuilderModule_DashboardActivity.DashboardActivitySubcomponent.Factory> dashboardActivitySubcomponentFactoryProvider;
 
   private Provider<SchedulersImp> schedulersImpProvider;
 
@@ -87,17 +92,23 @@ public final class DaggerAppComponent implements AppComponent {
 
   private Map<Class<?>, Provider<AndroidInjector.Factory<?>>> getMapOfClassOfAndProviderOfAndroidInjectorFactoryOf(
       ) {
-    return Collections.<Class<?>, Provider<AndroidInjector.Factory<?>>>singletonMap(MainActivity.class, (Provider) mainActivitySubcomponentFactoryProvider);}
+    return MapBuilder.<Class<?>, Provider<AndroidInjector.Factory<?>>>newMapBuilder(2).put(SplashScreenActivity.class, (Provider) splashScreenActivitySubcomponentFactoryProvider).put(DashboardActivity.class, (Provider) dashboardActivitySubcomponentFactoryProvider).build();}
 
   private DispatchingAndroidInjector<Object> getDispatchingAndroidInjectorOfObject() {
     return DispatchingAndroidInjector_Factory.newInstance(getMapOfClassOfAndProviderOfAndroidInjectorFactoryOf(), Collections.<String, Provider<AndroidInjector.Factory<?>>>emptyMap());}
 
   @SuppressWarnings("unchecked")
   private void initialize(final NetworkModule networkModuleParam, final BaseApplication arg0) {
-    this.mainActivitySubcomponentFactoryProvider = new Provider<ActivityBuilderModule_MainActivity.MainActivitySubcomponent.Factory>() {
+    this.splashScreenActivitySubcomponentFactoryProvider = new Provider<ActivityBuilderModule_SplashScreenActivity.SplashScreenActivitySubcomponent.Factory>() {
       @Override
-      public ActivityBuilderModule_MainActivity.MainActivitySubcomponent.Factory get() {
-        return new MainActivitySubcomponentFactory();}
+      public ActivityBuilderModule_SplashScreenActivity.SplashScreenActivitySubcomponent.Factory get(
+          ) {
+        return new SplashScreenActivitySubcomponentFactory();}
+    };
+    this.dashboardActivitySubcomponentFactoryProvider = new Provider<ActivityBuilderModule_DashboardActivity.DashboardActivitySubcomponent.Factory>() {
+      @Override
+      public ActivityBuilderModule_DashboardActivity.DashboardActivitySubcomponent.Factory get() {
+        return new DashboardActivitySubcomponentFactory();}
     };
     this.schedulersImpProvider = DoubleCheck.provider(SchedulersImp_Factory.create());
     this.provideHttpLoggingInterceptor$app_debugProvider = DoubleCheck.provider(NetworkModule_ProvideHttpLoggingInterceptor$app_debugFactory.create(networkModuleParam));
@@ -130,24 +141,50 @@ public final class DaggerAppComponent implements AppComponent {
     }
   }
 
-  private final class MainActivitySubcomponentFactory implements ActivityBuilderModule_MainActivity.MainActivitySubcomponent.Factory {
+  private final class SplashScreenActivitySubcomponentFactory implements ActivityBuilderModule_SplashScreenActivity.SplashScreenActivitySubcomponent.Factory {
     @Override
-    public ActivityBuilderModule_MainActivity.MainActivitySubcomponent create(MainActivity arg0) {
+    public ActivityBuilderModule_SplashScreenActivity.SplashScreenActivitySubcomponent create(
+        SplashScreenActivity arg0) {
       Preconditions.checkNotNull(arg0);
-      return new MainActivitySubcomponentImpl(arg0);
+      return new SplashScreenActivitySubcomponentImpl(arg0);
     }
   }
 
-  private final class MainActivitySubcomponentImpl implements ActivityBuilderModule_MainActivity.MainActivitySubcomponent {
-    private MainActivitySubcomponentImpl(MainActivity arg0) {
+  private final class SplashScreenActivitySubcomponentImpl implements ActivityBuilderModule_SplashScreenActivity.SplashScreenActivitySubcomponent {
+    private SplashScreenActivitySubcomponentImpl(SplashScreenActivity arg0) {
 
     }
 
     @Override
-    public void inject(MainActivity arg0) {
-      injectMainActivity(arg0);}
+    public void inject(SplashScreenActivity arg0) {
+      injectSplashScreenActivity(arg0);}
 
-    private MainActivity injectMainActivity(MainActivity instance) {
+    private SplashScreenActivity injectSplashScreenActivity(SplashScreenActivity instance) {
+      DaggerAppCompatActivity_MembersInjector.injectAndroidInjector(instance, DaggerAppComponent.this.getDispatchingAndroidInjectorOfObject());
+      BaseActivity_MembersInjector.injectViewModelFactory(instance, DaggerAppComponent.this.viewModelFactoryProvider.get());
+      return instance;
+    }
+  }
+
+  private final class DashboardActivitySubcomponentFactory implements ActivityBuilderModule_DashboardActivity.DashboardActivitySubcomponent.Factory {
+    @Override
+    public ActivityBuilderModule_DashboardActivity.DashboardActivitySubcomponent create(
+        DashboardActivity arg0) {
+      Preconditions.checkNotNull(arg0);
+      return new DashboardActivitySubcomponentImpl(arg0);
+    }
+  }
+
+  private final class DashboardActivitySubcomponentImpl implements ActivityBuilderModule_DashboardActivity.DashboardActivitySubcomponent {
+    private DashboardActivitySubcomponentImpl(DashboardActivity arg0) {
+
+    }
+
+    @Override
+    public void inject(DashboardActivity arg0) {
+      injectDashboardActivity(arg0);}
+
+    private DashboardActivity injectDashboardActivity(DashboardActivity instance) {
       DaggerAppCompatActivity_MembersInjector.injectAndroidInjector(instance, DaggerAppComponent.this.getDispatchingAndroidInjectorOfObject());
       BaseActivity_MembersInjector.injectViewModelFactory(instance, DaggerAppComponent.this.viewModelFactoryProvider.get());
       return instance;
