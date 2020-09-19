@@ -1,4 +1,4 @@
-package com.ttc.finch_station_app.model.response
+package com.ttc.finch_station_app.model.local
 
 import com.google.gson.annotations.SerializedName
 

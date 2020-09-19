@@ -1,4 +1,4 @@
-package com.ttc.finch_station_app.model.response
+package com.ttc.finch_station_app.model.local
 
 data class Stop(
     val name: String,

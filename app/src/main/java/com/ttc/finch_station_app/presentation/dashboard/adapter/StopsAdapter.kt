@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ttc.finch_station_app.R
 import com.ttc.finch_station_app.extensions.inflate
-import com.ttc.finch_station_app.model.response.Stop
+import com.ttc.finch_station_app.model.local.Stop
 import kotlinx.android.synthetic.main.row_stop.view.*
 
 class StopsAdapter(private var items: List<Stop>) : RecyclerView.Adapter<StopsAdapter.StopsViewHolder>() {

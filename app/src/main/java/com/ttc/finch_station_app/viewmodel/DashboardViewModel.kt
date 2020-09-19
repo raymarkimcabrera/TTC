@@ -3,7 +3,7 @@ package com.ttc.finch_station_app.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.ttc.finch_station_app.base.BaseViewModel
 import com.ttc.finch_station_app.di.usecase.GetFinchStationDetailsUseCase
-import com.ttc.finch_station_app.model.response.Stop
+import com.ttc.finch_station_app.model.local.Stop
 import timber.log.Timber
 import javax.inject.Inject
 
