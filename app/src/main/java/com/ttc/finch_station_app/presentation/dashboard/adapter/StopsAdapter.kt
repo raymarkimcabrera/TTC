@@ -4,7 +4,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ttc.finch_station_app.R
+import com.ttc.finch_station_app.extensions.hide
 import com.ttc.finch_station_app.extensions.inflate
+import com.ttc.finch_station_app.extensions.show
 import com.ttc.finch_station_app.model.local.Stop
 import kotlinx.android.synthetic.main.row_stop.view.*
 
@@ -38,6 +40,13 @@ class StopsAdapter(private var items: List<Stop>) : RecyclerView.Adapter<StopsAd
 
         fun bindData(item: Stop)= with(itemView) {
             tv_stop_name.text = item.name
+            if (item.routes.isNullOrEmpty()){
+                tv_no_routes_label.show()
+                ll_stop_route_layout.hide()
+            } else{
+                tv_no_routes_label.hide()
+                ll_stop_route_layout.show()
+            }
         }
     }
 
