@@ -1,4 +1,4 @@
-package com.example.poc
+package com.ttc.finch_station_app
 
 import org.junit.Test
 
