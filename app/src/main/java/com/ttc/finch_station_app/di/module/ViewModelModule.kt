@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.ttc.finch_station_app.utils.ViewModelFactory
 import com.ttc.finch_station_app.utils.ViewModelKey
-import com.ttc.finch_station_app.viewmodel.MainViewModel
+import com.ttc.finch_station_app.viewmodel.DashboardViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -18,6 +18,6 @@ internal abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(MainViewModel::class)
-    abstract fun bindMainViewModel(viewModel: MainViewModel): ViewModel
+    @ViewModelKey(DashboardViewModel::class)
+    abstract fun bindMainViewModel(viewModel: DashboardViewModel): ViewModel
 }

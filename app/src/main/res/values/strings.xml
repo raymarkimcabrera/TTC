@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FSR</string>
+    <string name="dashboard_title">Finch Station Routes</string>
 </resources>

@@ -1,16 +1,16 @@
 package com.ttc.finch_station_app.viewmodel
 
 import com.ttc.finch_station_app.base.BaseViewModel
-import com.ttc.finch_station_app.di.usecase.GetPostUseCase
+import com.ttc.finch_station_app.di.usecase.GetFinchStationDetailsUseCase
 import timber.log.Timber
 import javax.inject.Inject
 
-class MainViewModel
-@Inject constructor(private val getPostUseCase: GetPostUseCase) : BaseViewModel() {
+class DashboardViewModel
+@Inject constructor(private val getFinchStationDetailsUseCase: GetFinchStationDetailsUseCase) : BaseViewModel() {
 
-    fun getPost() {
+    fun getFinchStationDetails() {
         compositeDisposable.add(
-            getPostUseCase.execute()
+            getFinchStationDetailsUseCase.execute()
                 .subscribe({
                     Timber.e("Success")
                 }, {
