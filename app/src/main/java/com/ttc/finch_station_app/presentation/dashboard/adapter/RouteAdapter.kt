@@ -49,6 +49,14 @@ class RouteAdapter(
 
         fun bindData(item: Route) = with(itemView) {
             mtv_route_name.text = item.name
+            item.stopTimes?.let {
+                val stopTimes = item.stopTimes
+                stopTimes.sortedBy { it.departureTimeStamp }
+                val nextTrip = stopTimes.first()
+                mtv_next_trip_shape.text = nextTrip.shape
+                mtv_next_trip_time.text = nextTrip.departureTime
+            }
+
         }
     }
 
