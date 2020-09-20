@@ -5,10 +5,12 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mtv_see_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         android:textSize="@dimen/text_size_small"
         android:text="@string/see_all"
+        android:layout_margin="@dimen/spacing_small"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

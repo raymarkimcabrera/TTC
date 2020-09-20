@@ -3,20 +3,31 @@ package com.ttc.finch_station_app.presentation.dashboard.adapter
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.jakewharton.rxbinding3.view.clicks
 import com.ttc.finch_station_app.R
 import com.ttc.finch_station_app.extensions.inflate
 import com.ttc.finch_station_app.model.local.Route
+import com.ttc.finch_station_app.model.local.Stop
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.row_route.view.*
+import kotlinx.android.synthetic.main.row_see_all.view.*
 
 class RouteAdapter(
+    private val compositeDisposable: CompositeDisposable,
     private val items: List<Route>,
-    private val isSizeGreaterThanThree: Boolean
+    private val isSizeGreaterThanThree: Boolean,
+    private val stop: Stop,
+    private val selectAllListener: SeeAllListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    interface SeeAllListener {
+        fun onSeeAll(stop: Stop)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
             RecyclerView.ViewHolder {
         return when (viewType) {
-            R.layout.row_see_all -> SeeAllViewHolder.create(parent)
+            R.layout.row_see_all -> SeeAllViewHolder.create(compositeDisposable, parent)
             else -> RouteViewHolder.create(parent)
         }
     }
@@ -31,7 +42,7 @@ class RouteAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
             R.layout.row_route -> (holder as RouteViewHolder).bindData(items[position])
-            else -> SeeAllViewHolder
+            else -> (holder as SeeAllViewHolder).bindData(stop,selectAllListener)
         }
     }
 
@@ -60,11 +71,27 @@ class RouteAdapter(
         }
     }
 
-    class SeeAllViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class SeeAllViewHolder(
+        private val compositeDisposable: CompositeDisposable, itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
         companion object {
-            fun create(parent: ViewGroup): RouteViewHolder {
-                return RouteViewHolder(parent.inflate(R.layout.row_see_all))
+            fun create(
+                compositeDisposable: CompositeDisposable,
+                parent: ViewGroup
+            ): SeeAllViewHolder {
+                return SeeAllViewHolder(
+                    compositeDisposable,
+                    parent.inflate(R.layout.row_see_all)
+                )
             }
+        }
+
+        fun bindData(stop: Stop, selectAllListener: SeeAllListener) = with(itemView){
+            compositeDisposable.add(
+                mtv_see_all.clicks().subscribe {
+                    selectAllListener.onSeeAll(stop)
+                }
+            )
         }
     }
 }

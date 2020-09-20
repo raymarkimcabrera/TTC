@@ -2,6 +2,7 @@ package com.ttc.finch_station_app.presentation.dashboard
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.ttc.finch_station_app.R
@@ -9,6 +10,7 @@ import com.ttc.finch_station_app.base.BaseActivity
 import com.ttc.finch_station_app.extensions.hide
 import com.ttc.finch_station_app.extensions.show
 import com.ttc.finch_station_app.model.local.Stop
+import com.ttc.finch_station_app.presentation.dashboard.adapter.RouteAdapter
 import com.ttc.finch_station_app.presentation.dashboard.adapter.StopsAdapter
 import com.ttc.finch_station_app.viewmodel.DashboardViewModel
 import kotlinx.android.synthetic.main.activity_dashboard.*
@@ -21,9 +23,9 @@ fun MutableList<Stop>.sortByRouteList(): MutableList<Stop> {
     return temp
 }
 
-class DashboardActivity : BaseActivity() {
+class DashboardActivity : BaseActivity(), RouteAdapter.SeeAllListener {
 
-    private val stopsAdapter = StopsAdapter(subscriptionsWhileInMemory, mutableListOf())
+    private val stopsAdapter = StopsAdapter(subscriptionsWhileInMemory, mutableListOf(), this)
 
     private val dashboardViewModel: DashboardViewModel by viewModels { viewModelFactory }
     override fun getLayoutId(): Int = R.layout.activity_dashboard
@@ -50,5 +52,9 @@ class DashboardActivity : BaseActivity() {
 
     private fun updateList(it: MutableList<Stop>) {
         stopsAdapter.updateItemList(it.sortByRouteList())
+    }
+
+    override fun onSeeAll(stop: Stop) {
+
     }
 }

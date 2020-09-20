@@ -5,11 +5,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ttc.finch_station_app.model.local.Stop
 import io.reactivex.disposables.CompositeDisposable
 
-class StopsAdapter(private val compositeDisposable: CompositeDisposable,
-                   private var items: List<Stop>) : RecyclerView.Adapter<StopsViewHolder>() {
+class StopsAdapter(
+    private val compositeDisposable: CompositeDisposable,
+    private var items: List<Stop>,
+    private val selectAllListener: RouteAdapter.SeeAllListener
+) : RecyclerView.Adapter<StopsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
-            StopsViewHolder = StopsViewHolder.create(compositeDisposable,parent)
+            StopsViewHolder = StopsViewHolder.create(compositeDisposable, parent, selectAllListener)
 
 
     override fun onBindViewHolder(holder: StopsViewHolder, position: Int) {
@@ -18,7 +21,7 @@ class StopsAdapter(private val compositeDisposable: CompositeDisposable,
 
     override fun getItemCount(): Int = items.size
 
-    fun updateItemList(items: List<Stop>){
+    fun updateItemList(items: List<Stop>) {
         this.items = items
         notifyDataSetChanged()
     }

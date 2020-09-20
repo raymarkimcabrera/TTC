@@ -17,12 +17,21 @@ import kotlinx.android.synthetic.main.row_stop.view.*
 
 
 class StopsViewHolder(
-    compositeDisposable: CompositeDisposable,
-    itemView: View
+    private val compositeDisposable: CompositeDisposable,
+    itemView: View,
+    private val selectAllListener: RouteAdapter.SeeAllListener
 ) : RecyclerView.ViewHolder(itemView) {
     companion object {
-        fun create(compositeDisposable: CompositeDisposable, parent: ViewGroup): StopsViewHolder {
-            return StopsViewHolder(compositeDisposable, parent.inflate(R.layout.row_stop))
+        fun create(
+            compositeDisposable: CompositeDisposable,
+            parent: ViewGroup,
+            selectAllListener: RouteAdapter.SeeAllListener
+        ): StopsViewHolder {
+            return StopsViewHolder(
+                compositeDisposable,
+                parent.inflate(R.layout.row_stop),
+                selectAllListener
+            )
         }
     }
 
@@ -33,12 +42,14 @@ class StopsViewHolder(
                     if (rl_content.isVisible) {
 
                         TransitionManager.beginDelayedTransition(
-                            rl_content, AutoTransition())
+                            rl_content, AutoTransition()
+                        )
                         rl_content.hide()
                         iv_stop_expand.setImageResource(R.drawable.ic_expand_more_black_18dp)
                     } else {
                         TransitionManager.beginDelayedTransition(
-                            rl_content, AutoTransition())
+                            rl_content, AutoTransition()
+                        )
                         rl_content.show()
                         iv_stop_expand.setImageResource(R.drawable.ic_expand_less_black_18dp)
                     }
@@ -58,7 +69,13 @@ class StopsViewHolder(
             val isSizeGreaterThanThree = it.size > 3
             val temp = it.subList(0, if (isSizeGreaterThanThree) 3 else it.size)
 
-            val adapter = RouteAdapter(temp, isSizeGreaterThanThree)
+            val adapter = RouteAdapter(
+                compositeDisposable,
+                temp,
+                isSizeGreaterThanThree,
+                item,
+                selectAllListener
+            )
             rv_route_list.adapter = adapter
         }
     }
