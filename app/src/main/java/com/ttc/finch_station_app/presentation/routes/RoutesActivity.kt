@@ -1,9 +1,9 @@
 package com.ttc.finch_station_app.presentation.routes
 
+import android.view.MenuItem
 import com.ttc.finch_station_app.R
 import com.ttc.finch_station_app.base.BaseActivity
 import com.ttc.finch_station_app.model.local.Stop
-import com.ttc.finch_station_app.presentation.dashboard.adapter.RouteAdapter
 import com.ttc.finch_station_app.presentation.routes.adapter.FullRouteAdapter
 import kotlinx.android.synthetic.main.activity_routes.*
 
@@ -19,8 +19,17 @@ class RoutesActivity : BaseActivity() {
         initializeValues()
         initializeRecyclerView()
         supportActionBar?.title = stop?.name
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+
+        if (id == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
+    }
     private fun initializeRecyclerView() {
         stop?.routes?.let {
             val adapter = FullRouteAdapter(subscriptionsWhileInMemory, it)
