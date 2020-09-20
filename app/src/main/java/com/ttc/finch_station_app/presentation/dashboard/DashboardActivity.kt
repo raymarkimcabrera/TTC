@@ -1,15 +1,14 @@
 package com.ttc.finch_station_app.presentation.dashboard
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.widget.Toast
+import android.content.Intent
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import com.ttc.finch_station_app.R
 import com.ttc.finch_station_app.base.BaseActivity
 import com.ttc.finch_station_app.extensions.hide
 import com.ttc.finch_station_app.extensions.show
 import com.ttc.finch_station_app.model.local.Stop
+import com.ttc.finch_station_app.presentation.routes.RoutesActivity
+import com.ttc.finch_station_app.presentation.routes.RoutesActivity.Companion.TAG_ROUTE
 import com.ttc.finch_station_app.presentation.dashboard.adapter.RouteAdapter
 import com.ttc.finch_station_app.presentation.dashboard.adapter.StopsAdapter
 import com.ttc.finch_station_app.viewmodel.DashboardViewModel
@@ -55,6 +54,8 @@ class DashboardActivity : BaseActivity(), RouteAdapter.SeeAllListener {
     }
 
     override fun onSeeAll(stop: Stop) {
-
+        val intent = Intent(this@DashboardActivity, RoutesActivity::class.java)
+        intent.putExtra(TAG_ROUTE, stop)
+        startActivity(intent)
     }
 }
