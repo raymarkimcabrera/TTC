@@ -20,14 +20,14 @@ class StopsViewHolder(
     private val compositeDisposable: CompositeDisposable,
     itemView: View,
     private val items: List<Stop>,
-    private val selectAllListener: RouteAdapter.SeeAllListener
+    private val selectAllListener: RouteAdapter.ItemClickListener
 ) : RecyclerView.ViewHolder(itemView) {
     companion object {
         fun create(
             compositeDisposable: CompositeDisposable,
             parent: ViewGroup,
             items: List<Stop>,
-            selectAllListener: RouteAdapter.SeeAllListener
+            selectAllListener: RouteAdapter.ItemClickListener
         ): StopsViewHolder {
             return StopsViewHolder(
                 compositeDisposable,
@@ -58,7 +58,7 @@ class StopsViewHolder(
                     }
                 },
                 tv_stop_name.clicks().subscribe {
-                    selectAllListener.onSeeAll(items[adapterPosition])
+                    selectAllListener.onSeeAllClick(items[adapterPosition])
                 }
             )
         }

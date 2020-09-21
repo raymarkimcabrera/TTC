@@ -17,18 +17,19 @@ class RouteAdapter(
     private val compositeDisposable: CompositeDisposable,
     private val items: List<Route>,
     private val stop: Stop,
-    private val selectAllListener: SeeAllListener,
+    private val onItemClickLister: ItemClickListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    interface SeeAllListener {
-        fun onSeeAll(stop: Stop)
+    interface ItemClickListener {
+        fun onSeeAllClick(stop: Stop)
+        fun onRouteClick(route: Route)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
             RecyclerView.ViewHolder {
         return when (viewType) {
             R.layout.row_see_all -> SeeAllViewHolder.create(compositeDisposable, parent)
-            else -> RouteViewHolder.create(parent)
+            else -> RouteViewHolder.create(compositeDisposable, parent)
         }
     }
 
@@ -41,22 +42,35 @@ class RouteAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
-            R.layout.row_route -> (holder as RouteViewHolder).bindData(items[position])
-            else -> (holder as SeeAllViewHolder).bindData(stop, selectAllListener)
+            R.layout.row_route -> (holder as RouteViewHolder).bindData(items[position], onItemClickLister)
+            else -> (holder as SeeAllViewHolder).bindData(stop, onItemClickLister)
         }
     }
 
     override fun getItemCount(): Int =
         items.size + 1
 
-    class RouteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class RouteViewHolder(private val compositeDisposable: CompositeDisposable, itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
         companion object {
-            fun create(parent: ViewGroup): RouteViewHolder {
-                return RouteViewHolder(parent.inflate(R.layout.row_route))
+            fun create(
+                compositeDisposable: CompositeDisposable,
+                parent: ViewGroup
+            ): RouteViewHolder {
+                return RouteViewHolder(compositeDisposable, parent.inflate(R.layout.row_route))
             }
         }
 
-        fun bindData(item: Route) = with(itemView) {
+        fun bindData(item: Route, onItemClickLister: ItemClickListener) {
+            displayViews(item)
+            compositeDisposable.add(
+                itemView.clicks().subscribe {
+                    onItemClickLister.onRouteClick(item)
+                }
+            )
+        }
+
+        private fun displayViews(item: Route) = with(itemView) {
             mtv_route_name.text = item.name
             item.stopTimes?.let {
                 val stopTimes = item.stopTimes
@@ -65,7 +79,6 @@ class RouteAdapter(
                 mtv_next_trip_shape.text = nextTrip.shape
                 mtv_next_trip_time.text = nextTrip.departureTimeStamp.parseToTimeString()
             }
-
         }
     }
 
@@ -85,10 +98,10 @@ class RouteAdapter(
             }
         }
 
-        fun bindData(stop: Stop, selectAllListener: SeeAllListener) = with(itemView) {
+        fun bindData(stop: Stop, onItemClickLister: ItemClickListener) = with(itemView) {
             compositeDisposable.add(
                 mtv_see_all.clicks().subscribe {
-                    selectAllListener.onSeeAll(stop)
+                    onItemClickLister.onSeeAllClick(stop)
                 }
             )
         }

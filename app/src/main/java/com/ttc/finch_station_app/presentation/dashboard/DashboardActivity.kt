@@ -6,6 +6,7 @@ import com.ttc.finch_station_app.R
 import com.ttc.finch_station_app.base.BaseActivity
 import com.ttc.finch_station_app.extensions.hide
 import com.ttc.finch_station_app.extensions.show
+import com.ttc.finch_station_app.model.local.Route
 import com.ttc.finch_station_app.model.local.Stop
 import com.ttc.finch_station_app.presentation.dashboard.adapter.RouteAdapter
 import com.ttc.finch_station_app.presentation.dashboard.adapter.StopsAdapter
@@ -22,7 +23,7 @@ fun MutableList<Stop>.sortByRouteList(): MutableList<Stop> {
     return temp
 }
 
-class DashboardActivity : BaseActivity(), RouteAdapter.SeeAllListener {
+class DashboardActivity : BaseActivity(), RouteAdapter.ItemClickListener {
 
     private val stopsAdapter = StopsAdapter(subscriptionsWhileInMemory, mutableListOf(), this)
 
@@ -63,9 +64,13 @@ class DashboardActivity : BaseActivity(), RouteAdapter.SeeAllListener {
         isLoading(false)
     }
 
-    override fun onSeeAll(stop: Stop) {
+    override fun onSeeAllClick(stop: Stop) {
         val intent = Intent(this@DashboardActivity, RoutesActivity::class.java)
         intent.putExtra(TAG_ROUTE, stop)
         startActivity(intent)
+    }
+
+    override fun onRouteClick(route: Route) {
+
     }
 }

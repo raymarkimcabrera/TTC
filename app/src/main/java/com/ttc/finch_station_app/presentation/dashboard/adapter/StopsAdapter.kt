@@ -8,7 +8,7 @@ import io.reactivex.disposables.CompositeDisposable
 class StopsAdapter(
     private val compositeDisposable: CompositeDisposable,
     private var items: List<Stop>,
-    private val selectAllListener: RouteAdapter.SeeAllListener
+    private val selectAllListener: RouteAdapter.ItemClickListener
 ) : RecyclerView.Adapter<StopsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
