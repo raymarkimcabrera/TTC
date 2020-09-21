@@ -5,8 +5,6 @@ import com.ttc.finch_station_app.base.BaseViewModel
 import com.ttc.finch_station_app.di.usecase.GetFinchStationDetailsUseCase
 import com.ttc.finch_station_app.model.local.Stop
 import io.reactivex.disposables.Disposable
-import timber.log.Timber
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class DashboardViewModel
@@ -18,7 +16,6 @@ class DashboardViewModel
     private var getStationDetailsDisposable: Disposable? = null
 
     fun getFinchStationDetails() {
-        Timber.e("getFinchStationDetails")
         if (getStationDetailsDisposable != null)
             getStationDetailsDisposable?.dispose()
         getStationDetailsDisposable = getFinchStationDetailsUseCase.execute()
@@ -35,7 +32,6 @@ class DashboardViewModel
     }
 
     fun stopDisposables() {
-        Timber.e("stopDisposables")
         getStationDetailsDisposable?.dispose()
     }
 }
