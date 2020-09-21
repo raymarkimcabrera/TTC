@@ -73,16 +73,18 @@ class StopsViewHolder(
 
     private fun displayRouteList(item: Stop) = with(itemView) {
         item.routes?.let {
-            val isSizeGreaterThanThree = it.size > 3
-            val temp = it.subList(0, if (isSizeGreaterThanThree) 3 else it.size)
+            if (it.isNotEmpty()){
+                val isSizeGreaterThanThree = it.size > 3
+                val temp = it.subList(0, if (isSizeGreaterThanThree) 3 else it.size)
 
-            val adapter = RouteAdapter(
-                compositeDisposable,
-                temp,
-                item,
-                selectAllListener
-            )
-            rv_route_list.adapter = adapter
+                val adapter = RouteAdapter(
+                    compositeDisposable,
+                    temp,
+                    item,
+                    selectAllListener
+                )
+                rv_route_list.adapter = adapter
+            }
         }
     }
 

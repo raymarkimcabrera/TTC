@@ -31,12 +31,21 @@ class DashboardActivity : BaseActivity(), RouteAdapter.SeeAllListener {
 
     override fun initializeViews() {
         rv_stop_list.adapter = stopsAdapter
+        isLoading(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
         dashboardViewModel.getFinchStationDetails()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        dashboardViewModel.stopDisposables()
     }
 
     override fun initializeObservers() {
         super.initializeObservers()
-        dashboardViewModel.loading.observe(this, this::isLoading)
         dashboardViewModel.stopList.observe(this, this::updateList)
         dashboardViewModel.stationName.observe(this, this::setStationName)
     }
@@ -51,6 +60,7 @@ class DashboardActivity : BaseActivity(), RouteAdapter.SeeAllListener {
 
     private fun updateList(it: MutableList<Stop>) {
         stopsAdapter.updateItemList(it.sortByRouteList())
+        isLoading(false)
     }
 
     override fun onSeeAll(stop: Stop) {

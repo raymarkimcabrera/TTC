@@ -12,6 +12,7 @@ abstract class BaseViewModel : ViewModel() {
     lateinit var schedulers: Schedulers
     var compositeDisposable: CompositeDisposable = CompositeDisposable()
     var loading = MutableLiveData(false)
+    var error = MutableLiveData<Throwable>()
 
     override fun onCleared() {
         compositeDisposable.dispose()
