@@ -14,7 +14,6 @@ import com.ttc.finch_station_app.extensions.show
 import com.ttc.finch_station_app.model.local.Stop
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.row_stop.view.*
-import kotlinx.android.synthetic.main.row_stop.view.ll_stop_route_layout
 
 
 class StopsViewHolder(

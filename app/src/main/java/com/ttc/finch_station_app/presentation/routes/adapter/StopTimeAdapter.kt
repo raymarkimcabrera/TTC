@@ -7,7 +7,6 @@ import com.ttc.finch_station_app.R
 import com.ttc.finch_station_app.extensions.inflate
 import com.ttc.finch_station_app.extensions.parseToTimeString
 import com.ttc.finch_station_app.model.local.StopTime
-import com.ttc.finch_station_app.presentation.dashboard.adapter.StopsViewHolder
 import kotlinx.android.synthetic.main.row_stop_times.view.*
 
 class StopTimeAdapter(private val items: List<StopTime>) :

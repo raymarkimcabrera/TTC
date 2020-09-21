@@ -1,9 +1,9 @@
 package com.ttc.finch_station_app.di.module
 
-import com.ttc.finch_station_app.BuildConfig
-import com.ttc.finch_station_app.network.ApiInterface
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.ttc.finch_station_app.BuildConfig
+import com.ttc.finch_station_app.network.ApiInterface
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

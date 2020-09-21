@@ -2,8 +2,6 @@ package com.ttc.finch_station_app.di.component
 
 import com.ttc.finch_station_app.base.BaseApplication
 import com.ttc.finch_station_app.di.module.*
-import com.ttc.finch_station_app.di.module.ActivityBuilderModule
-import com.ttc.finch_station_app.di.module.ViewModelModule
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
