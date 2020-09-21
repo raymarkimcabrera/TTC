@@ -14,22 +14,26 @@ import com.ttc.finch_station_app.extensions.show
 import com.ttc.finch_station_app.model.local.Stop
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.row_stop.view.*
+import kotlinx.android.synthetic.main.row_stop.view.ll_stop_route_layout
 
 
 class StopsViewHolder(
     private val compositeDisposable: CompositeDisposable,
     itemView: View,
+    private val items: List<Stop>,
     private val selectAllListener: RouteAdapter.SeeAllListener
 ) : RecyclerView.ViewHolder(itemView) {
     companion object {
         fun create(
             compositeDisposable: CompositeDisposable,
             parent: ViewGroup,
+            items: List<Stop>,
             selectAllListener: RouteAdapter.SeeAllListener
         ): StopsViewHolder {
             return StopsViewHolder(
                 compositeDisposable,
                 parent.inflate(R.layout.row_stop),
+                items,
                 selectAllListener
             )
         }
@@ -53,7 +57,11 @@ class StopsViewHolder(
                         rl_content.show()
                         iv_stop_expand.setImageResource(R.drawable.ic_expand_less_black_18dp)
                     }
-                })
+                },
+                tv_stop_name.clicks().subscribe {
+                    selectAllListener.onSeeAll(items[adapterPosition])
+                }
+            )
         }
 
     }

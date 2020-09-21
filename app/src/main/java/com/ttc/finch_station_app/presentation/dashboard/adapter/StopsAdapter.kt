@@ -12,7 +12,7 @@ class StopsAdapter(
 ) : RecyclerView.Adapter<StopsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
-            StopsViewHolder = StopsViewHolder.create(compositeDisposable, parent, selectAllListener)
+            StopsViewHolder = StopsViewHolder.create(compositeDisposable, parent,items, selectAllListener)
 
 
     override fun onBindViewHolder(holder: StopsViewHolder, position: Int) {
