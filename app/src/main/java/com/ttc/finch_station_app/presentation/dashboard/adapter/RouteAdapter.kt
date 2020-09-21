@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding3.view.clicks
 import com.ttc.finch_station_app.R
 import com.ttc.finch_station_app.extensions.inflate
+import com.ttc.finch_station_app.extensions.parseToTimeString
 import com.ttc.finch_station_app.model.local.Route
 import com.ttc.finch_station_app.model.local.Stop
 import io.reactivex.disposables.CompositeDisposable
@@ -62,7 +63,7 @@ class RouteAdapter(
                 stopTimes.sortedBy { it.departureTimeStamp }
                 val nextTrip = stopTimes.first()
                 mtv_next_trip_shape.text = nextTrip.shape
-                mtv_next_trip_time.text = nextTrip.departureTime
+                mtv_next_trip_time.text = nextTrip.departureTimeStamp.parseToTimeString()
             }
 
         }
