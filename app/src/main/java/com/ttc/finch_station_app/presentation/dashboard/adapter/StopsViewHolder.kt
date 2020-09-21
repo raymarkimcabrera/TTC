@@ -72,7 +72,6 @@ class StopsViewHolder(
             val adapter = RouteAdapter(
                 compositeDisposable,
                 temp,
-                isSizeGreaterThanThree,
                 item,
                 selectAllListener
             )

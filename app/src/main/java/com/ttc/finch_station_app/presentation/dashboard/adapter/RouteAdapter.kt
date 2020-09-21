@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.row_see_all.view.*
 class RouteAdapter(
     private val compositeDisposable: CompositeDisposable,
     private val items: List<Route>,
-    private val isSizeGreaterThanThree: Boolean,
     private val stop: Stop,
     private val selectAllListener: SeeAllListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -34,7 +33,7 @@ class RouteAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return when {
-            isSizeGreaterThanThree && position == (itemCount - 1) -> R.layout.row_see_all
+            items.isNotEmpty() && position == (itemCount - 1) -> R.layout.row_see_all
             else -> R.layout.row_route
         }
     }
@@ -42,14 +41,12 @@ class RouteAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
             R.layout.row_route -> (holder as RouteViewHolder).bindData(items[position])
-            else -> (holder as SeeAllViewHolder).bindData(stop,selectAllListener)
+            else -> (holder as SeeAllViewHolder).bindData(stop, selectAllListener)
         }
     }
 
     override fun getItemCount(): Int =
-        if (isSizeGreaterThanThree)
-            items.size + 1
-        else items.size
+        items.size + 1
 
     class RouteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         companion object {
@@ -72,7 +69,8 @@ class RouteAdapter(
     }
 
     class SeeAllViewHolder(
-        private val compositeDisposable: CompositeDisposable, itemView: View) :
+        private val compositeDisposable: CompositeDisposable, itemView: View
+    ) :
         RecyclerView.ViewHolder(itemView) {
         companion object {
             fun create(
@@ -86,7 +84,7 @@ class RouteAdapter(
             }
         }
 
-        fun bindData(stop: Stop, selectAllListener: SeeAllListener) = with(itemView){
+        fun bindData(stop: Stop, selectAllListener: SeeAllListener) = with(itemView) {
             compositeDisposable.add(
                 mtv_see_all.clicks().subscribe {
                     selectAllListener.onSeeAll(stop)
